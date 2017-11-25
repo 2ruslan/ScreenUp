@@ -11,11 +11,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        PreferencesHelper.init(this);
+        init();
     }
 
     public void onClick(View w){
         PreferencesHelper.SetAutoStart(!PreferencesHelper.GetAutoStart());
 
+        init();
+    }
+
+    private void init() {
         if (PreferencesHelper.GetAutoStart() && !MainService.isMyServiceRunning(this, MainService.class))
             startService(new Intent(this, MainService.class));
 

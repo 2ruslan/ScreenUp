@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 
@@ -18,6 +19,24 @@ public class MainService extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
+
+    PowerManager.WakeLock wl;
+
+    @Override
+    public void onCreate() {
+        startForeground(R.drawable.ic_notify_proc, "screen up", 1100);
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "screen_up");
+        wl.acquire();
+    }
+
+
+    @Override
+    public void onDestroy() {
+        wl.release();
+    }
+
+
 
     public static boolean isMyServiceRunning(Context context, Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
