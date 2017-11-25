@@ -1,9 +1,11 @@
 package kupchinskii.ruslan.screenup;
 
 
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
@@ -15,6 +17,16 @@ public class MainService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    public static boolean isMyServiceRunning(Context context, Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     protected  void startForeground(int ico, String title, int notifyId) {
