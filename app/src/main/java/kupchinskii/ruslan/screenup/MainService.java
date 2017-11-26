@@ -64,7 +64,7 @@ public class MainService extends Service {
             Notification notification = mBuilder.getNotification();
             notification.contentIntent = PendingIntent.getActivity(this,
                     0, new Intent(getApplicationContext(), MainActivity.class)
-                    , 0);
+                    , PendingIntent.FLAG_UPDATE_CURRENT);
 
             startForeground(notifyId, notification);
         } else {
@@ -83,7 +83,7 @@ public class MainService extends Service {
 
             notification.contentIntent = PendingIntent.getActivity(this,
                     0, new Intent(getApplicationContext(), MainActivity.class)
-                    , 0);
+                    , PendingIntent.FLAG_UPDATE_CURRENT);
 
 
             startForeground(notifyId, notification);
